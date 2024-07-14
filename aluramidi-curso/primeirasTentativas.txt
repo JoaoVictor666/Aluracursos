@@ -1,0 +1,488 @@
+ function tocaSom () {
+     document.querySelector('#som_tecla_pom').play()
+ }
+
+
+ document.querySelector('.tecla_pom').onclick = tocaSom 
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+Adicionando patametro a funçao
+
+
+......................................................
+diferensa de declarasao de variavel
+
+let variavel = valor da variavel pode ser alterado 
+
+const constante = valor fixo 
+..........................................................
+
+
+function tocaSom (idElementoAudio) {
+    document.querySelector(idElementoAudio).play()
+}
+
+const listaDeTeclas = document.querySelectorAll('.tecla')
+
+let contador = 0
+
+//enquanto
+while (contador < listaDeTeclas.length) {
+    listaDeTeclas[contador].onclick = tocaSom
+    
+    contador = contador + 1
+
+    console.log(contador)
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+/*
+Explicasao de Template String
+
+Imagine que você está construindo um quebra-cabeça onde cada peça tem um nome específico. 
+Para identificar essas peças facilmente, você decide dar a cada peça um rótulo que segue um padrão, como "peça_nomedapeca". 
+Então, quando você vê "peça_maçã", você sabe que está se referindo à peça chamada "maçã".
+
+Na programação, a expressão` #som_${instrumento}` faz algo parecido. Ela cria uma etiqueta única para cada som com base no nome do instrumento.
+
+Template String:
+
+A expressão usa uma "template string", que é uma forma de criar strings (textos) em JavaScript que podem incluir variáveis dentro delas.
+Em vez de usar aspas simples ('') ou duplas (""), usamos crases (``).
+
+Dentro da template string, podemos colocar variáveis entre ${} para que seus valores sejam inseridos no texto final.
+${instrumento} significa "pegue o valor da variável instrumento e coloque-o aqui".
+
+
+O resultado de` #som_${instrumento}` é uma string onde o valor de instrumento é colocado no lugar de ${instrumento}.
+Se instrumento for "violao", a expressão `#som_${instrumento}` se torna `#som_violao`.
+
+*/
+
+
+................................................................................................................
+ const listaDeTeclas = document.querySelectorAll('.tecla')
+ let contador = 0;
+
+ // enquanto
+ while (contador < listaDeTeclas.length) {
+     const tecla = listaDeTeclas[contador];
+     const instrumento = tecla.classList[1];
+
+     console.log(instrumento);
+
+     const idAudio = `#som_${instrumento}`;
+      console.log(idAudio);
+
+     tecla.onclick = function () {
+         tocaSom(idAudio);
+     }
+
+     contador = contador + 1;
+
+     console.log(contador);
+ }
+
+.....................................................................................................................
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+utilizando o for
+
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+function tocaSom(idElementoAudio) {
+    document.querySelector(idElementoAudio).play();
+}
+
+const listaDeTeclas = document.querySelectorAll('.tecla');
+
+// para
+for (let contador = 0; contador < listaDeTeclas.length; contador++) {
+    const tecla = listaDeTeclas[contador];
+    const instrumento = tecla.classList[1];
+    
+    // template string
+    const idAudio = `#som_${instrumento}`;
+
+    tecla.onclick = function () {
+        tocaSom(idAudio);
+    }
+
+    console.log(contador);
+}
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+Condicionais e operadores logicos
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+tecla.onkeydown = function (evento) {
+
+    if (evento.code === 'Space') {
+        tecla.classList.add('ativa');
+    }
+
+    if (evento.code === 'Enter') {
+        tecla.classList.add('ativa');
+    }
+
+}
+
+
+
+.........................................................................
+operador logico ou
+........................................................................
+
+tecla.onkeydown = function (evento) {
+
+    if (evento.code === 'Space' || evento.code === 'Enter') {
+        tecla.classList.add('ativa');
+    }
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+validasao de elementos
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function tocaSom (seletorAudio) {
+    const elemento = document.querySelector(seletorAudio);
+
+    if (elemento === null) {
+        // alert('Elemento não encontrado');
+        console.log('Elemento não encontrado');
+    }
+
+    if (elemento != null) {
+        if (elemento.localName === 'audio') {
+            elemento.play();
+        }
+    }
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+operador logico E (and) 
+
+o JavaScript é inteligente o suficiente para quando o valor for nulo ou vazio em uma referência. 
+Portanto, se o elemento for nulo, não precisamos compará-lo com nulo. 
+Ou seja, podemos simplesmente remover != null 
+
+.....................................................................
+  if (elemento != null && elemento.localName === 'audio')
+  ...............................................................
+ if (elemento && elemento.localName === 'audio')
+ .......................................................
+
+e a condicional if fará a verificação.
+
+O JavaScript pensa o seguinte:
+ se elemento existir, ou seja, se for um valor diferente de nulo, vazio, 0, falso, ou indefinido, será considerada uma condição verdadeira.
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function tocaSom (seletorAudio) {
+    const elemento = document.querySelector(seletorAudio);
+
+    if (elemento && elemento.localName === 'audio') {
+        elemento.play();
+    }
+    else {
+        //alert('Elemento não encontrado');
+        console.log('Elemento não encontrado ou seletor inválido');
+    }
+}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Em JavaScript, você pode fazer quantas verificações lógicas quiser dentro de uma condicional, contanto que a sintaxe esteja correta.
+...............................................................................................................
+if (event.type === 'keyup' && (event.code === 'Space' || event.code === 'Enter') && outraCondicao) {
+    tecla.classList.remove('ativa')
+}
+...........................................................................................................................
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+A principal diferença entre usar uma arrow function e uma função anônima (também conhecida como função tradicional) em JavaScript está na maneira como o contexto (this) é tratado. 
+Vamos explorar essa diferença e outras características relevantes:
+
+Diferença no Contexto (this)
+
+Contexto Dinâmico
+Uma função tradicional tem seu próprio contexto this, que é determinado pela maneira como a função é chamada.
+
+Comportamento
+O valor de this dentro de uma função é definido pelo objeto que chama a função. 
+Se a função for chamada sem um contexto de objeto explícito, this será por padrão o objeto global (ou undefined no modo estrito).
+
+
+utilizando arrow function
+.......................................................................
+document.addEventListener('keydown', event => {
+    if (event.code === 'Space' || event.code === 'Enter') {
+        event.target.classList.add('ativa')
+    }
+})
+................................................................................
+
+Usando Função Anônima
+..................................................................................................
+document.addEventListener('keydown', function(event) {
+    if (event.code === 'Space' || event.code === 'Enter') {
+        event.target.classList.add('ativa')
+    }
+})
+......................................................................................................
+
+
+Ponto Principal
+A principal conclusão é que as arrow functions fornecem um contexto this mais previsível, pois elas o herdam do escopo onde foram definidas. Funções tradicionais oferecem mais flexibilidade em termos de contexto e podem ser usadas em mais cenários, como construtores.
+ No entanto, para manipuladores de eventos como os exemplos, ambas podem ser usadas de forma eficaz, já que o this não é especificamente utilizado na lógica.
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Codigo final utilizando tudo que aprendi e pesquisei 
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+// Seleciona todos os botões com a classe 'tecla'
+const listaDeTeclas = document.querySelectorAll('.tecla')
+
+// Função para tocar o som correspondente ao botão clicado ou pressionado
+function tocaSom(event) {
+    // Determina se o evento é de clique ou teclado
+    let tecla
+    if (event.type === 'click') {
+        tecla = event.target
+    } else if (event.type === 'keydown' || event.type === 'keyup') {
+        tecla = event.target
+    }
+
+    const classeTecla = tecla.classList[1] // Obtém a segunda classe (ex: 'tecla_pom')
+    const idAudio = `#som_${classeTecla}` // Mapeia a classe do botão ao ID do áudio correspondente
+
+    const audio = document.querySelector(idAudio) // Seleciona o elemento de áudio
+    if (audio && event.type === 'click') {
+        audio.play()
+    }
+
+    // Adiciona a classe 'ativa' se for pressionada 'Space' ou 'Enter'
+    if (event.type === 'keydown' && (event.code === 'Space' || event.code === 'Enter')) {
+        tecla.classList.add('ativa')
+    }
+
+    // Remove a classe 'ativa' quando a tecla é solta
+    if (event.type === 'keyup' && (event.code === 'Space' || event.code === 'Enter')) {
+        tecla.classList.remove('ativa')
+    }
+}
+
+// Loop para adicionar o evento de clique e teclado a cada botão
+listaDeTeclas.forEach(tecla => {
+    tecla.onclick = tocaSom
+    tecla.onkeydown = tocaSom
+    tecla.onkeyup = tocaSom
+})
+
+// Evento para detectar teclas pressionadas
+document.addEventListener('keydown', event => {
+    if (event.code === 'Space' || event.code === 'Enter') {
+        event.target.classList.add('ativa')
+    }
+})
+
+document.addEventListener('keyup', event => {
+    if (event.code === 'Space' || event.code === 'Enter') {
+        event.target.classList.remove('ativa')
+    }
+})
+
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+o codigo esta muito repetitivo buscando uma otimizasao encontrei um metodo melhor de simplificar a detecção de eventos e reduzir a duplicação de código. 
+Podemos separar a lógica de tocar o som e a lógica de adicionar/remover a classe ativa.
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+// Seleciona todos os botões com a classe 'tecla'
+const listaDeTeclas = document.querySelectorAll('.tecla')
+
+// Função para tocar o som correspondente ao botão clicado
+function tocaSom(idAudio) {
+    const audio = document.querySelector(idAudio)
+    if (audio) {
+        audio.play()
+    }
+}
+
+// Função para adicionar a classe 'ativa'
+function adicionarClasseAtiva(tecla) {
+    tecla.classList.add('ativa')
+}
+
+// Função para remover a classe 'ativa'
+function removerClasseAtiva(tecla) {
+    tecla.classList.remove('ativa')
+}
+
+// Adiciona evento de clique a cada botão
+listaDeTeclas.forEach(tecla => {
+    const classeTecla = tecla.classList[1]
+    const idAudio = `#som_${classeTecla}`
+
+    tecla.onclick = () => tocaSom(idAudio)
+
+    tecla.onkeydown = event => {
+        if (event.code === 'Space' || event.code === 'Enter') {
+            adicionarClasseAtiva(tecla)
+            tocaSom(idAudio)
+        }
+    }
+
+    tecla.onkeyup = event => {
+        if (event.code === 'Space' || event.code === 'Enter') {
+            removerClasseAtiva(tecla)
+        }
+    }
+})
+
+// Evento para detectar teclas pressionadas a nível de documento
+document.addEventListener('keydown', event => {
+    if (event.code === 'Space' || event.code === 'Enter') {
+        const tecla = document.querySelector('.tecla:focus')
+        if (tecla) {
+            adicionarClasseAtiva(tecla)
+        }
+    }
+})
+
+document.addEventListener('keyup', event => {
+    if (event.code === 'Space' || event.code === 'Enter') {
+        const tecla = document.querySelector('.tecla:focus')
+        if (tecla) {
+            removerClasseAtiva(tecla)
+        }
+    }
+})
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+o codigo estava sem validasao de elemento podendo causar erros inesperados.
+
+
+Explicações das Validacões Adicionadas:
+
+Verificação de Elemento de Áudio:
+
+if (audio && audio instanceof HTMLAudioElement): Garante que audio não seja null e que seja uma instância válida de HTMLAudioElement antes de tentar reproduzir o som. 
+Isso evita erros caso o elemento não seja encontrado ou não seja um elemento de áudio válido.
+
+Verificação de Elemento .tecla:
+
+if (tecla instanceof Element) { ... }: Assegura que tecla seja um elemento do DOM antes de adicionar ou remover a classe ativa. Isso previne erros caso o elemento não seja encontrado ou seja de outro tipo.
+Verificação de Classe .tecla no Documento:
+
+if (tecla && tecla.classList.contains('tecla')) { ... }: Confirma que tecla é um elemento .tecla antes de manipular a classe ativa no evento de teclado no documento. 
+Isso garante que apenas elementos esperados sejam afetados.
+Com essas validações adicionadas, o código está mais robusto e menos propenso a erros em situações onde elementos esperados não estão presentes ou não correspondem ao tipo esperado.
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+// Seleciona todos os botões com a classe 'tecla'
+const listaDeTeclas = document.querySelectorAll('.tecla')
+
+// Função para tocar o som correspondente ao botão clicado
+function tocaSom(idAudio) {
+    const audio = document.querySelector(idAudio)
+    if (audio && audio instanceof HTMLAudioElement) {
+        audio.play()
+    } else {
+        console.log(`Elemento de áudio não encontrado para o ID: ${idAudio}`)
+    }
+}
+
+// Função para adicionar a classe 'ativa'
+function adicionarClasseAtiva(tecla) {
+    if (tecla instanceof Element) {
+        tecla.classList.add('ativa')
+    }
+}
+
+// Função para remover a classe 'ativa'
+function removerClasseAtiva(tecla) {
+    if (tecla instanceof Element) {
+        tecla.classList.remove('ativa')
+    }
+}
+
+// Adiciona evento de clique a cada botão
+listaDeTeclas.forEach(tecla => {
+    const classeTecla = tecla.classList[1]
+    const idAudio = `#som_${classeTecla}`
+
+    tecla.onclick = () => tocaSom(idAudio)
+
+    tecla.onkeydown = event => {
+        if (event.code === 'Space' || event.code === 'Enter') {
+            adicionarClasseAtiva(tecla)
+            tocaSom(idAudio)
+        }
+    }
+
+    tecla.onkeyup = event => {
+        if (event.code === 'Space' || event.code === 'Enter') {
+            removerClasseAtiva(tecla)
+        }
+    }
+})
+
+// Evento para detectar teclas pressionadas a nível de documento
+document.addEventListener('keydown', event => {
+    if (event.code === 'Space' || event.code === 'Enter') {
+        const tecla = document.querySelector('.tecla:focus')
+        if (tecla && tecla.classList.contains('tecla')) {
+            adicionarClasseAtiva(tecla)
+        }
+    }
+})
+
+document.addEventListener('keyup', event => {
+    if (event.code === 'Space' || event.code === 'Enter') {
+        const tecla = document.querySelector('.tecla:focus')
+        if (tecla && tecla.classList.contains('tecla')) {
+            removerClasseAtiva(tecla)
+        }
+    }
+})
